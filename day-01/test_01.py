@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 import pytest
-from run_01 import parse, solve_1
+from run_01 import parse, solve_1, solve_2
 
 
 def load(file_name: str) -> list[str]:
@@ -19,3 +19,7 @@ def rotations_1() -> np.ndarray:
 
 def test_solve_1(rotations_1: np.ndarray) -> None:
     assert solve_1(rotations_1) == 3
+
+
+def test_solve_2(rotations_1: np.ndarray) -> None:
+    assert solve_2(rotations_1) == 6

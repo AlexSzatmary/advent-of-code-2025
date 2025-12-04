@@ -1,3 +1,4 @@
+import re
 import sys
 import timeit
 
@@ -23,6 +24,20 @@ def solve_1(rngs: list[tuple[int, int]]) -> int:
     )
 
 
+def is_invalid_2(num: str) -> bool:
+    return bool(re.search(r"^(\d+)(\1){1,}$", num))
+
+
+def invalid_rngs(lo: int, hi: int) -> list[int]:
+    return [item for item in range(lo, hi + 1) if is_invalid_2(str(item))]
+
+
+def solve_2(rngs: list[tuple[int, int]]) -> int:
+    return sum(
+        item for lo, hi in rngs for item in range(lo, hi + 1) if is_invalid_2(str(item))
+    )
+
+
 def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv
@@ -34,8 +49,8 @@ def main(argv: list[str] | None = None) -> None:
     start = timeit.default_timer()
     if "1" in argv:
         print(solve_1(nums))
-    # if "2" in argv:
-    #     print(solve_2(rotations))
+    if "2" in argv:
+        print(solve_2(nums))
 
     stop = timeit.default_timer()
     if "time" in argv:

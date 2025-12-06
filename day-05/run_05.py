@@ -25,6 +25,29 @@ def solve_1(rngs: list[tuple[int, int]], ingredients: list[int]) -> int:
     return n
 
 
+def merge_ranges(rngs: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    merged_rngs = []
+    rngs = sorted(rngs)
+    while rngs:
+        rng1 = rngs[0]
+        k = 0
+        for k, rng2 in enumerate(rngs[1:]):
+            if rng2[0] <= rng1[1]:
+                if rng1[1] <= rng2[1]:
+                    rng1 = (rng1[0], rng2[1])
+            else:
+                k -= 1
+                break
+        merged_rngs.append(rng1)
+        rngs = rngs[k + 2 :]
+    return merged_rngs
+
+
+def solve_2(rngs: list[tuple[int, int]]) -> int:
+    merged_rngs = merge_ranges(rngs)
+    return sum(hi - lo + 1 for lo, hi in merged_rngs)
+
+
 def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv
@@ -36,8 +59,8 @@ def main(argv: list[str] | None = None) -> None:
     start = timeit.default_timer()
     if "1" in argv:
         print(solve_1(rngs, ingredients))
-    # if "2" in argv:
-    #     print(solve_2(rngs, ingredients))
+    if "2" in argv:
+        print(solve_2(rngs))
 
     stop = timeit.default_timer()
     if "time" in argv:

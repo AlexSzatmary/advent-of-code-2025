@@ -1,7 +1,7 @@
 import os
 
 import pytest
-from run_05 import parse, solve_1
+from run_05 import parse, solve_1, solve_2, merge_ranges
 
 
 def load(file_name: str) -> list[str]:
@@ -26,3 +26,18 @@ def test_parse(rngs_ingredients_1: tuple[list[tuple[int, int]], list[int]]) -> N
 def test_solve_1(rngs_ingredients_1: tuple[list[tuple[int, int]], list[int]]) -> None:
     rngs, ingredients = rngs_ingredients_1
     assert solve_1(rngs, ingredients) == 3
+
+
+def test_merge_ranges(
+    rngs_ingredients_1: tuple[list[tuple[int, int]], list[int]],
+) -> None:
+    rngs, _ingredients = rngs_ingredients_1
+    assert merge_ranges(rngs) == [(3, 5), (10, 20)]
+    rngs_2 = rngs.copy()
+    rngs_2.append((100, 200))
+    assert merge_ranges(rngs_2) == [(3, 5), (10, 20), (100, 200)]
+
+
+def test_solve_2(rngs_ingredients_1: tuple[list[tuple[int, int]], list[int]]) -> None:
+    rngs, _ingredients = rngs_ingredients_1
+    assert solve_2(rngs) == 14

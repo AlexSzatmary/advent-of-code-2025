@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 import pytest
-from run_04 import parse, solve_1, count_adjacent
+from run_04 import parse, solve_1, count_adjacent, solve_2
 from inspect import cleandoc
 
 
@@ -40,3 +40,7 @@ def test_count_adjacent() -> None:
 
 def test_solve_1(rolls_1: np.ndarray) -> None:
     assert solve_1(rolls_1) == 13
+
+
+def test_solve_2(rolls_1: np.ndarray) -> None:
+    assert solve_2(rolls_1) == 43

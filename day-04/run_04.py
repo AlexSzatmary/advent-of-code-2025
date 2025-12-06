@@ -42,6 +42,23 @@ def solve_1(rolls: np.ndarray) -> int:
     return n
 
 
+def solve_2(rolls: np.ndarray) -> int:
+    n = 0
+    to_remove = []
+    first_iteration = True
+    while first_iteration or to_remove:
+        first_iteration = False
+        for roll in to_remove:
+            rolls[roll] = 0
+        to_remove = []
+        for i in range(rolls.shape[0]):
+            for j in range(rolls.shape[1]):
+                if rolls[i, j] and count_adjacent(rolls, i, j) < 4:
+                    n += 1
+                    to_remove.append((i, j))
+    return n
+
+
 def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv
@@ -53,8 +70,8 @@ def main(argv: list[str] | None = None) -> None:
     start = timeit.default_timer()
     if "1" in argv:
         print(solve_1(rolls))
-    # if "2" in argv:
-    #     print(solve_2(rolls))
+    if "2" in argv:
+        print(solve_2(rolls))
 
     stop = timeit.default_timer()
     if "time" in argv:

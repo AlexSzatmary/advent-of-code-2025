@@ -1,7 +1,7 @@
 import os
 
 import pytest
-from run_07 import parse, model_tachyons, solve_1
+from run_07 import parse, model_tachyons, solve_1, solve_2
 
 
 def load(file_name: str) -> list[str]:
@@ -29,3 +29,7 @@ def test_model_tachyons(manifold_1: list[str]) -> None:
 
 def test_solve_1(manifold_1: list[str]) -> None:
     assert solve_1(manifold_1) == 21
+
+
+def test_solve_2(manifold_1: list[str]) -> None:
+    assert solve_2(manifold_1) == 40

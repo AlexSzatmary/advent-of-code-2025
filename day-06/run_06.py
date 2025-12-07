@@ -11,6 +11,22 @@ def parse(lines: list[str]) -> tuple[list[list[int]], list[str]]:
     return (cols, ops)
 
 
+def parse_2(lines: list[str]) -> tuple[list[list[int]], list[str]]:
+    rows = [list(line) for line in lines[:-1]]
+    cols = ["".join(c) for c in transpose(rows)]
+    problems = []
+    problem = []
+    for col in cols:
+        if str.isspace(col):
+            problems.append(problem)
+            problem = []
+        else:
+            problem.append(int(col))
+
+    ops = lines[-1].split()
+    return (problems, ops)
+
+
 def transpose(a: list[list]) -> list[list]:
     return [list(tup) for tup in zip(*a, strict=False)]
 
@@ -44,11 +60,6 @@ def merge_ranges(rngs: list[tuple[int, int]]) -> list[tuple[int, int]]:
     return merged_rngs
 
 
-def solve_2(rngs: list[tuple[int, int]]) -> int:
-    merged_rngs = merge_ranges(rngs)
-    return sum(hi - lo + 1 for lo, hi in merged_rngs)
-
-
 def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv
@@ -60,8 +71,9 @@ def main(argv: list[str] | None = None) -> None:
     start = timeit.default_timer()
     if "1" in argv:
         print(solve_1(columns, ops))
-    # if "2" in argv:
-    #     print(solve_2(columns, ops))
+    if "2" in argv:
+        columns, ops = parse_2(input_lines)
+        print(solve_1(columns, ops))
 
     stop = timeit.default_timer()
     if "time" in argv:

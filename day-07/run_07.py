@@ -1,0 +1,72 @@
+import sys
+import timeit
+
+
+def parse(lines: list[str]) -> list[str]:
+    return [s[:-1] for s in lines]
+
+
+def model_tachyons(manifold: list[str]) -> tuple[list[str], int]:
+    last_row = list(manifold[0])
+    solution = ["".join(last_row)]
+    n_splits = 0
+    for row in manifold[1:]:
+        modeled_row = list(row)
+        for i in range(len(row)):
+            if modeled_row[i] == ".":
+                if last_row[i] == "|" or last_row[i] == "S":
+                    modeled_row[i] = "|"
+            elif modeled_row[i] == "^" and (last_row[i] == "|" or last_row[i] == "S"):
+                n_splits += 1
+                if i > 0:
+                    modeled_row[i - 1] = "|"
+                if i < len(row) - 1:
+                    modeled_row[i + 1] = "|"
+        solution.append("".join(modeled_row))
+        last_row = modeled_row
+    return solution, n_splits
+
+
+def solve_1(manifold: list[str]) -> int:
+    return model_tachyons(manifold)[1]
+
+
+def merge_ranges(rngs: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    merged_rngs = []
+    rngs = sorted(rngs)
+    while rngs:
+        rng1 = rngs[0]
+        k = 0
+        for k, rng2 in enumerate(rngs[1:]):
+            if rng2[0] <= rng1[1]:
+                if rng1[1] <= rng2[1]:
+                    rng1 = (rng1[0], rng2[1])
+            else:
+                k -= 1
+                break
+        merged_rngs.append(rng1)
+        rngs = rngs[k + 2 :]
+    return merged_rngs
+
+
+def main(argv: list[str] | None = None) -> None:
+    if argv is None:
+        argv = sys.argv
+    if argv[0] == "python":
+        argv = argv[1:]
+    with open(argv[-1]) as hin:
+        input_lines = hin.readlines()
+    manifold = parse(input_lines)
+    start = timeit.default_timer()
+    if "1" in argv:
+        print(solve_1(manifold))
+    # if "2" in argv:
+    #     print(solve_2(manifold))
+
+    stop = timeit.default_timer()
+    if "time" in argv:
+        print("Time:", stop - start)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

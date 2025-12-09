@@ -45,17 +45,6 @@ def form_circuits(
             continue
         merge_circuits(circuits, a, b)
     return circuits
-    # n_connections_made = 0
-    # i = 0
-    # circuits = {x: [x] for x in coordinates}
-    # while n_connections_made < n_connections - 1:
-    #     _, a, b = distances[i]
-    #     i += 1  # this is the best place to put this incrementer
-    #     if b in circuits[a]:  # already connected
-    #         continue
-    #     merge_circuits(circuits, a, b)
-    #     n_connections_made += 1
-    # return circuits
 
 
 def merge_circuits(

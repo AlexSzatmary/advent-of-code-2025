@@ -86,6 +86,25 @@ def solve_1(coordinates: list[Coordinate], n_connections: int) -> int:
     return sort_take_top_3_and_multiply(circuits)
 
 
+def form_circuits_2(
+    coordinates: list[Coordinate],
+    distances: list[tuple[float, Coordinate, Coordinate]],
+) -> int:
+    circuits = {x: [x] for x in coordinates}
+    for _, a, b in distances:
+        if b in circuits[a]:  # already connected
+            continue
+        merge_circuits(circuits, a, b)
+        if len(circuits[a]) == len(coordinates):
+            return a[0] * b[0]
+    return -1
+
+
+def solve_2(coordinates: list[Coordinate]) -> int:
+    distances = calculate_distances(coordinates)
+    return form_circuits_2(coordinates, distances)
+
+
 def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv
@@ -97,8 +116,8 @@ def main(argv: list[str] | None = None) -> None:
     start = timeit.default_timer()
     if "1" in argv:
         print(solve_1(coordinates, 1000))
-    # if "2" in argv:
-    #     print(solve_2(coordinates, 1000))
+    if "2" in argv:
+        print(solve_2(coordinates))
 
     stop = timeit.default_timer()
     if "time" in argv:

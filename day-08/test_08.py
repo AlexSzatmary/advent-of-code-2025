@@ -7,6 +7,7 @@ from run_08 import (
     form_circuits,
     sort_take_top_3_and_multiply,
     solve_1,
+    solve_2,
     Coordinate,
 )
 
@@ -54,3 +55,7 @@ def test_sort_take_top_3_and_multiply(coordinates_1: list[Coordinate]) -> None:
 
 def test_solve_1(coordinates_1: list[Coordinate]) -> None:
     assert solve_1(coordinates_1, 10) == 40
+
+
+def test_solve_2(coordinates_1: list[Coordinate]) -> None:
+    assert solve_2(coordinates_1) == 25272
